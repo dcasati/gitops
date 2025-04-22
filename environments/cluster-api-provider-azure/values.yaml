@@ -1,0 +1,30 @@
+core: "cluster-api:v1.8.4"
+infrastructure: "azure:v1.17.0"
+addon: "helm:v0.2.5"
+providers:
+  infrastructure:
+    azure:
+      namespace: azure-infrastructure-system
+      manager:
+        featureGates:
+          MachinePool: true
+      annotations:
+        helm.sh/hook: post-install,post-upgrade
+        helm.sh/hook-weight: "5"
+manager:
+  featureGates:
+    core:
+      ClusterTopology: true
+      MachinePool: true
+    azure:
+      MachinePool: true
+      ASOAPI: true
+      ClusterResourceSet: true
+      ClusterTopology: true
+additionalDeployments:
+  azureserviceoperator-controller-manager:
+    deployment:
+      containers:
+        - name: manager
+          args:
+            --crd-pattern: "documentdb.azure.com/*;managedidentity.azure.com/*;keyvault.azure.com/*"
