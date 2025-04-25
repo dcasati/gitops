@@ -245,6 +245,8 @@ EOF
 
 kubectl apply -f identity.yaml
 
+##
+# kro
 export KRO_VERSION=$(curl -sL \
     https://api.github.com/repos/kro-run/kro/releases/latest | \
     jq -r '.tag_name | ltrimstr("v")'
@@ -260,6 +262,19 @@ kubectl wait --for=condition=Ready pod --all -n kro --timeout=300s
 # create a resource group 
 kubectl create ns mystorage
 
+# create the ASO credentials on the mystorage ns
+cat <<EOF  > aso-credentials.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+ name: aso-credentials
+ namespace: default
+stringData:
+ AZURE_SUBSCRIPTION_ID: "$AZURE_SUBSCRIPTION_ID"
+ AZURE_TENANT_ID: "$AZURE_TENANT_ID"
+ AZURE_CLIENT_ID: "$AZURE_CLIENT_ID"
+ USE_WORKLOAD_IDENTITY_AUTH: "true"
+EOF
 
 cat <<EOF > rg.yaml
 apiVersion: kro.run/v1alpha1
