@@ -39,9 +39,9 @@ spec:
         - resources-finalizer.argocd.argoproj.io
         project: default
         sources:
-          - repoURL: https://github.com/Azure-Samples/aks-platform-engineering.git
-            path: aks-platform-engineering/tree/main/gitops/apps/infra
-            targetRevision: HEAD
+          - repoURL: https://github.com/Azure-Samples/aks-store-demo.git
+            path: kustomize/overlays/dev
+            targetRevision: HEAD            
         destination:
           server: https://kubernetes.default.svc
           namespace: default
