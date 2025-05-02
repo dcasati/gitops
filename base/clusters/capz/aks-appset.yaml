@@ -5,20 +5,20 @@ metadata:
   namespace: argocd
 spec:
   generators:
-  - clusters:
-      selector:
-        matchExpressions:
-          - key: akuity.io/argo-cd-cluster-name
-            operator: NotIn
-            values: [in-cluster]
+    - clusters:
+        selector:
+          matchExpressions:
+            - key: akuity.io/argo-cd-cluster-name
+              operator: NotIn
+              values: [in-cluster]
   template:
     metadata:
-      name: aks1
+      name: aks-{{name}}
       namespace: argocd
     spec:
       destination:
         namespace: default
-        server: https://kubernetes.default.svc
+        server: '{{server}}'
       project: default
       source:
         repoURL: 'https://mboersma.github.io/cluster-api-charts'
@@ -26,9 +26,8 @@ spec:
         targetRevision: v0.4.2
         helm:
           valuesObject:
-          valuesObject:
-            clusterName: ${schema.spec.cluster}
-            location: ${schema.spec.location}
+            clusterName: '{{name}}'
+            location: "westus3"
             subscriptionID: '{{metadata.annotations.subscription_id}}'
             clientID: '{{metadata.annotations.akspe_identity_id}}'
             tenantID: '{{metadata.annotations.tenant_id}}'
@@ -56,8 +55,8 @@ spec:
         syncOptions:
           - CreateNamespace=true
         retry:
-          limit: -1 # number of failed sync attempt retries; unlimited number of attempts if less than 0
+          limit: -1
           backoff:
-            duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
-            factor: 2 # a factor to multiply the base duration after each failed retry
-            maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
+            duration: 5s
+            factor: 2
+            maxDuration: 10m
