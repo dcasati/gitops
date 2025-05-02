@@ -22,26 +22,33 @@ spec:
       project: default
       source:
         repoURL: 'https://mboersma.github.io/cluster-api-charts'
-        chart: azure-managed-cluster
-        targetRevision: v0.2.4
+        chart: azure-aks-aso
+        targetRevision: v0.4.2
         helm:
           valuesObject:
-            cluster:
-              location: "westus3"
+          valuesObject:
+            clusterName: ${schema.spec.cluster}
+            location: ${schema.spec.location}
             subscriptionID: '{{metadata.annotations.subscription_id}}'
-            identity:
-              clientID: '{{metadata.annotations.akspe_identity_id}}'
-              tenantID: '{{metadata.annotations.tenant_id}}'
-              type: WorkloadIdentity
-            controlplane:
-              kubernetes_version: "1.30.10"
-              networkPluginMode: "overlay"
-              ## Optional SSH public key data (must be valid)
-              ## only needed if you want access to the workload cluster VMs
-              # sshPublicKey:
-            defaults:
-              agentPool:
-                sku: Standard_D8ds_v5
+            clientID: '{{metadata.annotations.akspe_identity_id}}'
+            tenantID: '{{metadata.annotations.tenant_id}}'
+            authMode: "workloadidentity"
+            kubernetesVersion: v1.30.10
+            clusterNetwork: "overlay"
+            managedMachinePoolSpecs:
+              pool0:
+                count: 1
+                enableAutoScaling: true
+                enableEncryptionAtHost: false
+                enableFIPS: false
+                enableNodePublicIP: false
+                enableUltraSSD: false
+                maxCount: 3
+                minCount: 1
+                mode: System
+                osSKU: AzureLinux
+                vmSize: Standard_DS2_v2
+                type: VirtualMachineScaleSets
       syncPolicy:
         automated:
           prune: true
