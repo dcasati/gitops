@@ -33,15 +33,15 @@ spec:
       createNamespace: true
   valuesTemplate: |
     applications:
-      - name: apps-infra
-        namespace: argocd
+      aks-store:
+        namespace: default
         finalizers:
-        - resources-finalizer.argocd.argoproj.io
+          - resources-finalizer.argocd.argoproj.io
         project: default
         sources:
           - repoURL: https://github.com/Azure-Samples/aks-store-demo.git
             path: kustomize/overlays/dev
-            targetRevision: HEAD            
+            targetRevision: HEAD
         destination:
           server: https://kubernetes.default.svc
           namespace: default
@@ -50,13 +50,13 @@ spec:
             prune: false
             selfHeal: false
           syncOptions:
-          - CreateNamespace=true
-        revisionHistoryLimit: null
-    ignoreDifferences:
-      - group: apps
-        kind: Deployment
-        jsonPointers:
-        - /spec/replicas
-    info:
-    - name: url
-      value: https://argoproj.github.io/
+            - CreateNamespace=true
+        revisionHistoryLimit: 2
+        ignoreDifferences:
+          - group: apps
+            kind: Deployment
+            jsonPointers:
+              - /spec/replicas
+        info:
+          - name: url
+            value: https://argoproj.github.io/
