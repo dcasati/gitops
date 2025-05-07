@@ -13,7 +13,7 @@ spec:
               values: [in-cluster]
   template:
     metadata:
-      name: aks-{{name}}
+      name: shared-team-cluster
       namespace: argocd
     spec:
       destination:
@@ -26,7 +26,7 @@ spec:
         targetRevision: v0.4.2
         helm:
           valuesObject:
-            clusterName: '{{name}}'
+            clusterName: shared-team-cluster
             location: "westus3"
             subscriptionID: '{{metadata.annotations.subscription_id}}'
             clientID: '{{metadata.annotations.akspe_identity_id}}'
