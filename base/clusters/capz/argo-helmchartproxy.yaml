@@ -33,7 +33,7 @@ spec:
       createNamespace: true
   valuesTemplate: |
     applications:
-      aks-store:
+      shared-team-cluster-apps:
         namespace: default
         finalizers:
           - resources-finalizer.argocd.argoproj.io
