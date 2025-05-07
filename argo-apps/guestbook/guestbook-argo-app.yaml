@@ -8,9 +8,9 @@ spec:
   source:
     repoURL: https://github.com/kubernetes/examples.git
     targetRevision: master
-    path: guestbook/legacy
+    path: guestbook/
     directory:
-      recurse: true
+      recurse: false
   destination:
     server: https://kubernetes.default.svc
     namespace: guestbook
