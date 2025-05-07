@@ -6,9 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/kubernetes/examples.git
-    targetRevision: master
-    path: guestbook/all-in-one
+    url: https://raw.githubusercontent.com/kubernetes/examples/refs/heads/master/guestbook/all-in-one/guestbook-all-in-one.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: guestbook
