@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/kubernetes/examples.git
     targetRevision: master
-    path: guestbook/all-in-one
+    path: guestbook/legacy
     directory:
       recurse: true
   destination:
