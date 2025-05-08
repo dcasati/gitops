@@ -31,7 +31,7 @@ jobs:
       id: create-application-set-yaml
       uses: cuchi/jinja2-action@v1.3.0
       with:
-        template: base/clusters/application_set.yaml.example
+        template: base/clusters/application_set.yaml.example.jinja
         output_file: base/clusters/${{github.event.issue.number}}/application_set.yaml
       env:
         repoURL: ${{ steps.issue-parser.outputs.issueparser_repoURL }}
