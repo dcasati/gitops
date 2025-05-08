@@ -59,7 +59,6 @@ body:
       label: targetRevsion
       description: Branch or tag of the GitHub Repository where the cluster ArgoCD application configuration is stored
       placeholder: e.g. main
-      default: HEAD
     validations:
       required: true
   
