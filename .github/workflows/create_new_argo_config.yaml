@@ -10,8 +10,6 @@ permissions:
   contents: write
   issues: write
 
-env:
-  
 jobs:
   create-environment:
     runs-on: ubuntu-latest
