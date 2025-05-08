@@ -55,7 +55,7 @@ jobs:
         body: |
           SUCCESS: The Application Set succeeded to create via issue #${{ github.event.issue.number }}.
           GitHub Action Run [#${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}) to see the logs.
-          Commit SHA: ${{ github.steps.auto-commit-action.outputs.commit_hash ? github.steps.auto-commit-action.outputs.commit_hash : NO CHANGES MADE }}
+          Commit SHA: ${{ github.steps.auto-commit-action.outputs.commit_hash || 'No Changes Made'}}
 
     - name: Close Issue
       uses: peter-evans/close-issue@v3
