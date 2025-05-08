@@ -1,0 +1,73 @@
+---
+name: Deploy an AKS Cluster with GitOps (ArgoCD)
+title: "[Self Serve New Azure Deployment]: "
+description: Deploy an AKS Cluster with GitOps (ArgoCD)
+# labels: ["demo", "deploy", "infra"]
+assignees:
+  - dcasati
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is an example form to deploy an AKS Cluster with GitOps (ArgoCD) using Azure.
+
+  - type: input
+    id: clustername
+    attributes:
+      label: clustername
+      description: Name of your new AKS Cluster
+      placeholder: e.g. some-demo-cluster-name-goes-here
+    validations:
+      required: true
+
+  - type: dropdown
+    id: location
+    attributes:
+      label: Location
+      description: Location to deploy the App Service Instance
+      options:
+        - canadaeast
+        - eastus2
+        - westus3
+        - swedencentral
+      default: 0
+    validations:
+      required: true
+  
+  - type: input
+    id: repoURL
+    attributes:
+      label: repoURL
+      description: GitHub Repository URL where the cluster ArgoCD application configuration is stored
+      placeholder: e.g. https://github.com/dcasati/gitops.git
+    validations:
+      required: true
+  
+  - type: input
+    id: path
+    attributes:
+      label: path
+      description: Path to the ArgoCD application configuration in the GitHub Repository
+      placeholder: e.g. argo-apps
+    validations:
+      required: true
+  
+  - type: input
+    id: targetRevsion
+    attributes:
+      label: targetRevsion
+      description: Branch or tag of the GitHub Repository where the cluster ArgoCD application configuration is stored
+      placeholder: e.g. main
+      default: HEAD
+    validations:
+      required: true
+  
+  # - type: checkboxes
+  #   id: terms
+  #   attributes:
+  #     label: Code of Conduct
+  #     description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com). 
+  #     options:
+  #       - label: I agree to follow this project's Code of Conduct
+  #         required: true
