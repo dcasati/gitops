@@ -33,7 +33,7 @@ jobs:
     - name: Create new cluster Application Set Directory
       id: create-application-set-directory
       run: |
-        mkdir -p base/clusters/${{github.event.issue.number}}
+        mkdir -p environments/${{github.event.issue.number}}
   
     - name: Create new cluster Application Set YAML
       id: create-application-set-yaml
@@ -51,7 +51,7 @@ jobs:
       with:
         commit_message: 'Add new cluster Application Set for Issue #${{github.event.issue.number}}'
         branch: main
-        file_pattern: 'base/clusters/${{github.event.issue.number}}/*'
+        file_pattern: 'environments/${{github.event.issue.number}}/*'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
