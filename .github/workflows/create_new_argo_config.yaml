@@ -15,6 +15,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Create Action Start GitHub Issue comment
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+        issue-number: ${{ github.event.issue.number }}
+        body: |
+          GitHub Action Started.
+          GitHub Action Run: [#${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}) to see the logs.
+    
     - uses: actions/checkout@v4
 
     - uses: stefanbuck/github-issue-parser@v3
@@ -54,7 +62,7 @@ jobs:
         issue-number: ${{ github.event.issue.number }}
         body: |
           SUCCESS: The Application Set succeeded to create via issue #${{ github.event.issue.number }}.
-          GitHub Action Run [#${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}) to see the logs.
+          GitHub Action Run: [#${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}) to see the logs.
           Commit SHA: ${{ github.steps.auto-commit-action.outputs.commit_hash || 'No Changes Made'}}
 
     - name: Close Issue
