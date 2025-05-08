@@ -32,7 +32,7 @@ jobs:
       uses: cuchi/jinja2-action@v1.3.0
       with:
         template: base/clusters/application_set.yaml.example.jinja
-        output_file: base/clusters/${{github.event.issue.number}}/application_set.yaml
+        output_file: environments/${{github.event.issue.number}}/application_set.yaml
       env:
         repoURL: ${{ steps.issue-parser.outputs.issueparser_repoURL }}
         path: ${{ steps.issue-parser.outputs.issueparser_path }}
