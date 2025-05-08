@@ -21,7 +21,7 @@ spec:
         targetRevision: {{ env['targetRevision'] }}
         path: {{ env['path'] }}
       destination:
-        name: '{{name}}'
+        name: '{% raw %}{{name}}{% endraw %}'
         namespace: workload
       syncPolicy:
         retry:
