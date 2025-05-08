@@ -1,0 +1,29 @@
+name: Create Environment when Issue is Opened
+
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+
+permissions:
+  id-token: write
+  contents: read
+  issues: write
+
+env:
+  
+jobs:
+  create-environment:
+    if: |
+      !github.event.issue.pull_request && (contains(github.event.issue.labels.*.name, 'demo') && contains(github.event.issue.labels.*.name, 'deploy') && contains(github.event.issue.labels.*.name, 'infra'))
+    runs-on: ubuntu-latest
+    environment: demo
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: stefanbuck/github-issue-parser@v3
+      id: issue-parser
+      with:
+        template-path: .github/ISSUE_TEMPLATE/create_new_argo_config.yaml

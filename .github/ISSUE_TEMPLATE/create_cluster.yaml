@@ -54,9 +54,9 @@ body:
       required: true
   
   - type: input
-    id: targetRevsion
+    id: targetRevision
     attributes:
-      label: targetRevsion
+      label: targetRevision
       description: Branch or tag of the GitHub Repository where the cluster ArgoCD application configuration is stored
       placeholder: e.g. main
     validations:
