@@ -21,7 +21,7 @@ spec:
         targetRevision: HEAD
         path: rk-argo-apps-123
       destination:
-        name: ''
+        name: '{{name}}'
         namespace: workload
       syncPolicy:
         retry:
