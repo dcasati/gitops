@@ -17,9 +17,9 @@ spec:
     spec:
       project: default
       source:
-        repoURL: $
-        targetRevision: $
-        path: $
+        repoURL: 
+        targetRevision: HEAD
+        path: rk-argo-apps-123
       destination:
         name: ''
         namespace: workload
