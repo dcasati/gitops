@@ -12,5 +12,5 @@ spec:
   syncPolicy:
       automated: {}
   destination:
-      namespace: argocd
+      namespace: default
       server: https://kubernetes.default.svc
