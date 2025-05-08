@@ -7,18 +7,14 @@ on:
       - reopened
 
 permissions:
-  id-token: write
-  contents: read
+  contents: write
   issues: write
 
 env:
   
 jobs:
   create-environment:
-    if: |
-      !github.event.issue.pull_request && (contains(github.event.issue.labels.*.name, 'demo') && contains(github.event.issue.labels.*.name, 'deploy') && contains(github.event.issue.labels.*.name, 'infra'))
     runs-on: ubuntu-latest
-    environment: demo
 
     steps:
     - uses: actions/checkout@v4
@@ -27,3 +23,27 @@ jobs:
       id: issue-parser
       with:
         template-path: .github/ISSUE_TEMPLATE/create_new_argo_config.yaml
+    
+    - name: Create new cluster Application Set Directory
+      id: create-application-set-directory
+      run: |
+        mkdir -p base/clusters/${{github.event.issue.number}}
+  
+    - name: Create new cluster Application Set YAML
+      id: create-application-set-yaml
+      uses: cuchi/jinja2-action@v1.3.0
+      with:
+        template: base/clusters/application_set.yaml.example
+        output_file: base/clusters/${{github.event.issue.number}}/application_set.yaml
+      env:
+        repoURL: ${{ steps.issue-parser.outputs.issueparser_repoURL }}
+        path: ${{ steps.issue-parser.outputs.issueparser_path }}
+        targetRevision: ${{ steps.issue-parser.outputs.issueparser_targetRevision }}
+
+    - uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: 'Add new cluster Application Set for Issue #${{github.event.issue.number}}'
+        branch: main
+        file_pattern: 'base/clusters/${{github.event.issue.number}}/*'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
