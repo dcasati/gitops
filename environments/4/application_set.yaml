@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: clusters
+  namespace: argocd
+spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          environment: control-plane
+  template:
+    metadata:
+      name: clusters
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/dcasati/gitops.git
+        targetRevision: HEAD
+        path: base/clusters/capz
+      destination:
+        name: '{{name}}'
+        namespace: workload
+      syncPolicy:
+        retry:
+          limit: 10
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true
