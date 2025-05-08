@@ -17,9 +17,9 @@ spec:
     spec:
       project: default
       source:
-        repoURL: ${{repoURL}}
-        targetRevision: ${{targetRevsion}}
-        path: ${{path}}
+        repoURL: {{ env['repoURL'] }}
+        targetRevision: {{ env['targetRevision'] }}
+        path: {{ env['path'] }}
       destination:
         name: '{{name}}'
         namespace: workload
