@@ -17,7 +17,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: 
+        repoURL: https://github.com/dcasati/gitops.git
         targetRevision: HEAD
         path: rk-argo-apps-123
       destination:
