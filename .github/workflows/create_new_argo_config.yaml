@@ -39,9 +39,29 @@ jobs:
         targetRevision: ${{ steps.issue-parser.outputs.issueparser_targetRevision }}
 
     - uses: stefanzweifel/git-auto-commit-action@v5
+      id: auto-commit-action
       with:
         commit_message: 'Add new cluster Application Set for Issue #${{github.event.issue.number}}'
         branch: main
         file_pattern: 'base/clusters/${{github.event.issue.number}}/*'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create success comment
+      uses: peter-evans/create-or-update-comment@v4
+      if: success()
+      with:
+        issue-number: ${{ github.event.issue.number }}
+        body: |
+          SUCCESS: The Application Set succeeded to create via issue #${{ github.event.issue.number }}.
+          GitHub Action Run [#${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}) to see the logs.
+          Commit SHA: ${{ github.steps.auto-commit-action.outputs.commit_hash }}
+    
+    - name: Create failure comment
+      uses: peter-evans/create-or-update-comment@v4
+      if: failure()
+      with:
+        issue-number: ${{ github.event.issue.number }}
+        body: |
+          FAILURE: The Application Set failed to create.
+          Run [#${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}) to see the logs.
